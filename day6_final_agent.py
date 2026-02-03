@@ -15,7 +15,7 @@ print(f"✅ 本地计算完成！预测第5次分数为：{future_score}")
 
 llm = ChatOpenAI(
     model="deepseek-chat",
-    api_key="sk-",
+    api_key="sk-***",
     base_url="https://api.deepseek.com/v1"
 )
 
