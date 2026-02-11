@@ -5,7 +5,7 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 llm = ChatOpenAI(
     model="deepseek-chat",
-    api_key="sk-e5583ffe66144917aeecf7a2ef750d8e",
+    api_key="sk-",
     base_url="https://api.deepseek.com/v1"
 )
 
