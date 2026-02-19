@@ -6,12 +6,11 @@ from database import save_message, SessionLocal, ChatMessage
 db_queue = queue.Queue()
 
 
-# 2. 定义异步工人：它会一直运行，等待队列里的任务
+# 2. 定义异步工人
 def db_worker():
     while True:
-        # 获取任务（role, content, image_path）
         task = db_queue.get()
-        if task is None: break  # 退出信号
+        if task is None: break
 
         role, content, image_path = task
         print(f"核心：正在异步写入数据库... 来自 {role}")
@@ -30,7 +29,6 @@ def async_save_to_db(role, content, image_path=None):
     db_queue.put((role, content, image_path))
 
 
-# --- 管理功能：删除历史记录 ---
 def clear_history():
     db = SessionLocal()
     try:

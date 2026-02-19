@@ -13,7 +13,6 @@ init_db()
 if "messages" not in st.session_state:
     db_history = get_all_history()
     if db_history:
-        # 如果数据库有数据，转换格式存入 session_state
         st.session_state.messages = [
             {"role": msg.role, "content": msg.content, "image": msg.image_path}
             for msg in db_history
@@ -24,7 +23,6 @@ if "messages" not in st.session_state:
 st.set_page_config(page_title="CIL 数据助手", page_icon="📈", layout="centered")
 col1, col2 = st.columns([9, 1])
 with col2:
-    # 巧妙利用 help 参数，鼠标悬停时会有提示
     if st.button("🗑️", help="清空当前历史对话", use_container_width=True):
         clear_history()
         st.session_state.messages = []
@@ -171,8 +169,6 @@ else:
     """, unsafe_allow_html=True)
 
 # 聊天流逻辑
-
-# 显示历史记录
 for msg in st.session_state.messages:
     avatar = "👤" if msg["role"] == "user" else "🤖"
     with st.chat_message(msg["role"], avatar=avatar):
@@ -190,7 +186,6 @@ if prompt := st.chat_input("问问 CIL"):
 if st.session_state.messages and st.session_state.messages[-1]["role"] == "user":
 
     with st.chat_message("assistant", avatar="🤖"):
-        # 【修改 1】不再提前声明占位符，避免在 Thinking 时显示空行或旧数据
 
         # 1. 优先声明状态框
         with st.status("⏳ CIL 接收到您的需求，正在分析...", expanded=False) as status:
@@ -205,8 +200,6 @@ if st.session_state.messages and st.session_state.messages[-1]["role"] == "user"
                         curr_messages = event["chatbot"]["messages"]
                         if curr_messages:
                             msg = curr_messages[-1]
-                            # 【修改 2】核心过滤逻辑：只有当消息是真正的 AI 回复且有内容时才赋值
-                            # 这样可以避免抓取到历史消息或空的 tool_call 消息
                             if hasattr(msg, 'content') and msg.content.strip():
                                 raw_output = msg.content
 
@@ -233,7 +226,7 @@ if st.session_state.messages and st.session_state.messages[-1]["role"] == "user"
 
                 status.update(label="🎯 分析完成！", state="complete")
 
-                # 解析最终的 JSON (增加防御性逻辑)
+                # 解析最终的 JSON
                 answer_text = raw_output
                 image_path = None
                 try:
@@ -244,14 +237,13 @@ if st.session_state.messages and st.session_state.messages[-1]["role"] == "user"
                         answer_text = data.get("answer", raw_output)
                         image_path = data.get("image_file")
                 except:
-                    pass  # 如果解析失败，直接使用原始 text
+                    pass
 
             except Exception as e:
                 status.update(label="❌ 分析出错", state="error")
                 answer_text = f"抱歉，处理时遇到了点问题: {e}"
                 image_path = None
 
-        # 2. 状态框处理完毕后，【唯一一次】声明文字占位符
         text_placeholder = st.empty()
 
         # 流式打字机效果
@@ -279,5 +271,4 @@ if st.session_state.messages and st.session_state.messages[-1]["role"] == "user"
         # 扔给异步队列，后台慢慢存数据库
         async_save_to_db(role="assistant", content=answer_text, image_path=image_path)
 
-        # 强制刷新一下，确保 UI 显示最新状态
         st.rerun()

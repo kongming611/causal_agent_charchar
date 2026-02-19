@@ -17,7 +17,7 @@ except ImportError:
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 # 配置画图字体
 plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei']
@@ -115,7 +115,7 @@ def retrieve_from_graph(query: str) -> str:
     graph_context = []
     matched_nodes = set()
 
-    # 实体链接 (Entity Linking)：将自然语言锚定到图谱节点
+    # 实体链接将自然语言锚定到图谱节点
     for node, aliases in ontology_mapping.items():
         if node in query:
             matched_nodes.add(node)
@@ -125,7 +125,7 @@ def retrieve_from_graph(query: str) -> str:
                     matched_nodes.add(node)
                     break
 
-    # 如果找到了实体，提取其一跳子图 (1-hop Subgraph)
+    # 如果找到了实体，提取其一跳子图
     for node in matched_nodes:
         for neighbor in knowledge_graph.successors(node):
             rel = knowledge_graph.edges[node, neighbor]['relation']

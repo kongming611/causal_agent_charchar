@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-# 创建数据库引擎（本地 SQLite 文件）
+# 创建本地SQLite文件
 engine = create_engine('sqlite:///cil_history.db', echo=False)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -13,9 +13,9 @@ class ChatMessage(Base):
     __tablename__ = "chat_messages"
 
     id = Column(Integer, primary_key=True, index=True)
-    role = Column(String(20))          # user 或 assistant
-    content = Column(Text)             # 文本内容
-    image_path = Column(String(255))   # 图片路径（如果有）
+    role = Column(String(20))
+    content = Column(Text)
+    image_path = Column(String(255))
     timestamp = Column(DateTime, default=datetime.utcnow)
 
 # 初始化数据库
