@@ -10,7 +10,7 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from final_my_tools import calculate, search_knowledge_tool
 
 
-os.environ["OPENAI_API_KEY"] = "sk-e5583ffe66144917aeecf7a2ef750d8e"
+os.environ["OPENAI_API_KEY"] = "sk-"
 os.environ["OPENAI_API_BASE"] = "https://api.deepseek.com/v1"
 
 
@@ -92,5 +92,6 @@ def stream_agent_response(user_input, history):
     final_state = agent_graph.invoke({"messages": langchain_messages})
 
     final_message = final_state["messages"][-1]
+
 
     return {"output": final_message.content}
