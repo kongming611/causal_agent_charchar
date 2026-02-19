@@ -11,4 +11,5 @@ matplotlib==3.10.0
 networkx==3.4.2
 sqlalchemy==2.0.37
 typing_extensions==4.12.2
+pydantic==2.8.2
 huggingface-hub==0.28.1
