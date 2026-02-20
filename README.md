@@ -22,6 +22,15 @@
 ## 🚀 快速启动
 > **前置要求**：建议使用 Python 3.10+ 环境。
 
+### ⚠️ 特别提示：关于解压路径
+
+如果您是通过 GitHub 下载的 `.zip` 源码压缩包，解压后系统会自动生成一个双层嵌套的文件夹（例如 `causal_agent_charchar-main/causal_agent_charchar-main/`）。
+    
+**在执行任何终端部署命令前，请务必确保您的终端（Terminal/CMD）路径已经进入了最内层的核心源码目录**（即使用 `ls` 或 `dir` 命令能直接看到 `start.py` 和 `requirements.txt` 的那一层目录）。
+    
+正确的终端路径状态示例：
+`D:\您的路径\causal_agent_charchar-main\causal_agent_charchar-main>`
+
 ### 1. 环境构建与隔离
 为了避免依赖冲突，请务必在虚拟环境中运行：
 ```bash
@@ -35,23 +44,24 @@ pip install -r requirements.txt --no-cache-dir
 ```
 
 ### 2. 核心模型预热
-运行环境部署脚本。该步骤会自动校验本地缓存，秒级完成 RAG 核心嵌入模型（m3e-base）的就位：
+运行环境部署脚本。该步骤会自动校验本地缓存，秒级完成 RAG 核心嵌入模型`（m3e-base）`的就位：
 ```bash
 python final_download_model.py
 ```
 ### 3. 系统配置
    - 密钥配置：在 **final_backend.py** 中填入你的 DEEPSEEK_API_KEY。
-   - 知识库准备：确保根目录下存在 knowledge.txt 文件，内容为您需要智能体检索的知识。
+   - 知识库准备：确保根目录下存在` knowledge.txt` 文件，内容为您需要智能体检索的知识。
 
 ### 4. 一键点火运行
 运行内置的自适应启动脚本。该脚本会自动锁定环境路径并唤醒浏览器界面：
 ```bash
 python start.py
 ```
-   - 💡 小贴士：若在 Windows 终端遇到乱码，请确保您的终端已切换至 UTF-8 编码，或直接在 VS Code 内核终端中运行。
+   - 💡 小贴士：若在 Windows 终端遇到乱码，请确保您的终端已切换至 `UTF-8` 编码，或直接在 VS Code 内核终端中运行。
 
 ## 👨‍💻 开发者信息
 ### 作者：钟江铭 (广东工业大学 · 材料类)
 
 ### 项目归属：Causal Agent 考核项目
+
 
